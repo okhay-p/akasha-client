@@ -13,6 +13,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.text-h1 {
+    @apply text-2xl font-bold font-merriweather text-primary;
+}
+
+.text-body {
+    @apply text-base font-merriweather-sans;
+}
+
 :root {
     --radius: 0.75rem;
     --background: oklch(0.969 0.012 301.29);
