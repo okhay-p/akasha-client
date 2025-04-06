@@ -8,6 +8,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [auth, setAuth] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (import.meta.env.DEV) {
@@ -15,6 +16,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
       if (storedToken) {
         setAuth(storedToken);
         setIsAuthenticated(true);
+        setLoading(false);
+      } else {
+        setLoading(false);
       }
     }
   }, []);
@@ -38,6 +42,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   const value: AuthContextValue = {
     isAuthenticated,
+    loading,
     auth,
     login,
     logout,
@@ -45,7 +50,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

@@ -8,6 +8,8 @@ import { ThemeProvider } from "./components/theme-provider";
 /* PAGE IMPORTS */
 import Landing from "./layouts/landing";
 import GenerateLessons from "./layouts/generate-lessons";
+import ProtectedRoute from "./components/protected-route";
+import TopicPage from "./layouts/topic-page";
 
 function App() {
   return (
@@ -17,7 +19,19 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route
             path="/generate-lessons"
-            element={<GenerateLessons />}
+            element={
+              <ProtectedRoute>
+                <GenerateLessons />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/topic/:id"
+            element={
+              <ProtectedRoute>
+                <TopicPage />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </Router>
