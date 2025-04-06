@@ -1,5 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { ThemeProvider } from "./components/theme-provider";
 
 /* PAGE IMPORTS */
@@ -8,11 +11,14 @@ import GenerateLessons from "./layouts/generate-lessons";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/generate-lessons" element={<GenerateLessons />} />
+          <Route
+            path="/generate-lessons"
+            element={<GenerateLessons />}
+          />
         </Routes>
       </Router>
     </ThemeProvider>

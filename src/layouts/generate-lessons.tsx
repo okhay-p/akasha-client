@@ -1,7 +1,7 @@
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
+import api from "@/util/interceptor";
 import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,10 +10,8 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -36,7 +34,7 @@ function GenerateLessons() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const res = await axios.post("http://localhost:8080/topic", data);
+    const res = await api.post("/topic", data);
     console.log(res);
     setMessage(res.data.message);
   }
