@@ -10,6 +10,7 @@ import Landing from "./layouts/landing";
 import GenerateLessons from "./layouts/generate-lessons";
 import ProtectedRoute from "./components/protected-route";
 import TopicPage from "./layouts/topic-page";
+import LessonPage from "./layouts/lesson-page";
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <TopicPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/topic/:id/:order"
+            element={
+              <ProtectedRoute>
+                <LessonPage />
               </ProtectedRoute>
             }
           />

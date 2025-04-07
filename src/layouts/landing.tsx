@@ -16,10 +16,13 @@ function Landing() {
   return (
     <div className="bg-dot h-dvh">
       <Header />
-      <div className="font-merriweather-sans text-center flex flex-col items-center gap-2 mt-40">
-        <Button>
-          <Link to="/generate-lessons">Generate Lessons</Link>
-        </Button>
+      <div className="font-custom-sans text-center flex flex-col items-center gap-2 mt-40">
+        <Link to="/generate-lessons">
+          <Button>Generate Lessons</Button>
+        </Link>
+        <Link to="/topic/0ab588ab-71aa-4025-835d-85e47486c5b7">
+          <Button>test topic</Button>
+        </Link>
         <Button onClick={testApi}>API Testing</Button>
         {apiStatus && <p>{apiStatus}</p>}
       </div>

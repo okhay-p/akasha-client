@@ -1,0 +1,106 @@
+import Header from "@/components/header";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import {
+  TopicFullDetails,
+  TopicLesson,
+  TopicQuestion,
+} from "./topic-page";
+import LessonPartRenderer from "@/components/lesson-part-renderer";
+
+export interface LessonPart {
+  type: "objectives" | "content" | "question";
+  data: Array<string> | string | TopicQuestion;
+}
+
+function LessonPage() {
+  const { id, order } = useParams();
+
+  const [lesson, setLesson] = useState<TopicLesson | null>(null);
+  const [curIdx, setCurIdx] = useState<number>(0);
+
+  // [[obj1,obj2],"content1","content2", q1{},q2{}]
+  const [parts, setParts] = useState<Array<LessonPart>>([]);
+
+  useEffect(() => {
+    // Get lesson from localStorage
+    if (id) {
+      const ls = localStorage.getItem(id);
+      if (ls) {
+        const parsedJson: TopicFullDetails = JSON.parse(ls);
+        console.log("Yoinked it from localstorage");
+
+        if (order) {
+          const lsLesson = parsedJson.lessons.find(
+            (item) => item.lesson_order === Number.parseInt(order),
+          );
+          if (lsLesson) {
+            setLesson(lsLesson);
+
+            // Populate lesson parts array
+            const lpArr: LessonPart[] = [];
+            lpArr.push({
+              type: "objectives",
+              data: lsLesson.objectives,
+            });
+
+            for (const c of lsLesson.content) {
+              lpArr.push({
+                type: "content",
+                data: c,
+              });
+            }
+
+            for (const q of lsLesson.questions) {
+              lpArr.push({
+                type: "question",
+                data: q,
+              });
+            }
+            setParts(lpArr);
+          }
+        }
+      }
+    }
+  }, [id, order]);
+
+  const increaseIdx = () => {
+    if (curIdx < parts.length) setCurIdx(curIdx + 1);
+  };
+
+  const decreaseIdx = () => {
+    if (curIdx > 0) setCurIdx(curIdx - 1);
+  };
+
+  return (
+    <div className="bg-dot h-screen font-custom">
+      <Header />
+      {lesson && (
+        <div className="mt-8 flex justify-center relative">
+          <div className="text-2xl">{lesson.lesson_title}</div>
+          {parts.map((lp, i) => {
+            return (
+              <div className="absolute top-12" hidden={i != curIdx}>
+                <LessonPartRenderer
+                  key={i}
+                  lp={lp}
+                  increaseIdx={increaseIdx}
+                  decreaseIdx={decreaseIdx}
+                />
+              </div>
+            );
+          })}
+          <div
+            className="absolute top-12"
+            hidden={curIdx != parts.length}
+          >
+            Congrats
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default LessonPage;

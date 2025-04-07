@@ -14,6 +14,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Link } from "react-router-dom";
 
 const FormSchema = z.object({
   content: z
@@ -27,16 +28,18 @@ const FormSchema = z.object({
 });
 
 function GenerateLessons() {
-  const [message, setMessage] = useState("");
+  const [topicId, setTopicId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     const res = await api.post("/topic", data);
-    console.log(res);
-    setMessage(res.data.message);
+
+    setTopicId(res.data.message);
   }
 
   return (
@@ -68,12 +71,22 @@ function GenerateLessons() {
                 </FormItem>
               )}
             />
-            <Button className="w-[100%]" type="submit">
+            <Button
+              className="w-[100%]"
+              type="submit"
+              disabled={loading}
+            >
               Generate
             </Button>
           </form>
         </Form>
-        {message && <p>{message}</p>}
+        {topicId && (
+          <Link to={"/topic/" + topicId}>
+            <Button className="max-w-lg min-w-md mt-2">
+              Go To Topic
+            </Button>
+          </Link>
+        )}
       </div>
     </>
   );
