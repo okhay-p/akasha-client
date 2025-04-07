@@ -1,16 +1,17 @@
 import Header from "@/components/header";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
+import { Card } from "@/components/ui/card";
 import {
   TopicFullDetails,
   TopicLesson,
   TopicQuestion,
 } from "./topic-page";
 import LessonPartRenderer from "@/components/lesson-part-renderer";
+import { Button } from "@/components/ui/button";
 
 export interface LessonPart {
-  type: "objectives" | "content" | "question";
+  type: "objectives" | "content" | "question" | "finished";
   data: Array<string> | string | TopicQuestion;
 }
 
@@ -58,6 +59,12 @@ function LessonPage() {
                 data: q,
               });
             }
+
+            lpArr.push({
+              type: "finished",
+              data: [id, order],
+            });
+
             setParts(lpArr);
           }
         }
@@ -95,7 +102,24 @@ function LessonPage() {
             className="absolute top-12"
             hidden={curIdx != parts.length}
           >
-            Congrats
+            <Card className="w-md p-4 font-custom">
+              <p className="font-base text-lg text-center">
+                That's all for this topic! Generate more if you want to
+                learn more!
+              </p>
+              <div className="flex justify-end gap-2">
+                <Link to={"/topic/" + id}>
+                  <Button variant="secondary" className="w-24">
+                    Home
+                  </Button>
+                </Link>
+                <Link to="/generate-lessons">
+                  <Button variant="default" className="w-24">
+                    Generate
+                  </Button>
+                </Link>
+              </div>
+            </Card>
           </div>
         </div>
       )}
