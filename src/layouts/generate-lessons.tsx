@@ -63,7 +63,7 @@ function GenerateLessons() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-lg min-w-md"
+            className="max-w-lg md:w-md w-xs"
           >
             <FormField
               control={form.control}
