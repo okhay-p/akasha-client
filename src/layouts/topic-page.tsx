@@ -100,7 +100,7 @@ function TopicPage() {
       <Header />
       <div className="grid place-items-center h-screen">
         {topic && (
-          <Card className="w-[350px] mt-24 shadow-md">
+          <Card className="w-[350px] max-w-[90%] mt-24 shadow-md">
             <CardHeader>
               <CardTitle className="font-custom mb-1">
                 <div className="inline border rounded-sm p-1 mr-1 shadow-sm">

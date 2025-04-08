@@ -93,15 +93,15 @@ function LessonPage() {
   return (
     <div className="bg-dot h-screen font-custom">
       <Header />
-      <div className="grid place-items-center h-screen">
+      <div className="mx-auto grid place-items-center h-screen max-w-[90%]">
         {lesson && (
-          <div className="flex justify-center relative min-h-[600px]">
+          <div className="flex justify-center relative min-h-[620px] sm:min-h-[600px]">
             <div className="text-2xl">{lesson.lesson_title}</div>
             {parts.map((lp, i) => {
               return (
                 <div
                   key={i}
-                  className="absolute top-12"
+                  className="absolute top-10 sm:top-12"
                   hidden={i != curIdx}
                 >
                   <LessonPartRenderer
