@@ -3,15 +3,15 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { ThemeProvider } from "./components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 
 /* PAGE IMPORTS */
 import Landing from "./layouts/landing";
-import GenerateLessons from "./layouts/generate-lessons";
-import ProtectedRoute from "./components/protected-route";
-import TopicPage from "./layouts/topic-page";
-import LessonPage from "./layouts/lesson-page";
-import AllTopicsPage from "./layouts/all-topics-page";
+import GenerateLessons from "@/layouts/generate-lessons";
+import ProtectedRoute from "@/components/protected-route";
+import TopicPage from "@/layouts/topic-page";
+import LessonPage from "@/layouts/lesson-page";
+import AllTopicsPage from "@/layouts/all-topics-page";
 
 function App() {
   return (
