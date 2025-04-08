@@ -15,7 +15,7 @@ api.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
 
-    if (token && import.meta.env.DEV) {
+    if (token && import.meta.env.VITE_DEV) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
 
