@@ -11,6 +11,7 @@ import GenerateLessons from "./layouts/generate-lessons";
 import ProtectedRoute from "./components/protected-route";
 import TopicPage from "./layouts/topic-page";
 import LessonPage from "./layouts/lesson-page";
+import AllTopicsPage from "./layouts/all-topics-page";
 
 function App() {
   return (
@@ -39,6 +40,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <LessonPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/all-topics/"
+            element={
+              <ProtectedRoute>
+                <AllTopicsPage />
               </ProtectedRoute>
             }
           />

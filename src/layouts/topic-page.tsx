@@ -86,7 +86,7 @@ function TopicPage() {
   }, [id]);
 
   return (
-    <div className="bg-dot h-screen font-custom-sans">
+    <div className="bg-dot h-screen">
       <Header />
       <div className="flex justify-center">
         {topic && (

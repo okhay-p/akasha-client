@@ -46,8 +46,9 @@ function GenerateLessons() {
     <>
       <Header />
       <div className="p-2 flex mx-auto items-center flex-col max-w-lg m-24">
-        <p className="text-h1 mb-2">
-          ✨ Create a lesson plan for any topic ✨
+        <p className="text-h1 mb-2 text-center">
+          Learn any topic with interactvie lessons
+          <br /> ✨
         </p>
         <Form {...form}>
           <form
@@ -61,7 +62,7 @@ function GenerateLessons() {
                 <FormItem>
                   <FormControl>
                     <Textarea
-                      placeholder="Paste your text content here"
+                      placeholder="e.g. Teach me how to dougie"
                       className="mb-2"
                       rows={12}
                       {...field}

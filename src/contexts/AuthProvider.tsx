@@ -35,6 +35,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   const logout = async () => {
     if (import.meta.env.DEV) {
       Cookies.remove("token");
+      localStorage.clear();
       setIsAuthenticated(false);
       setAuth("");
     }

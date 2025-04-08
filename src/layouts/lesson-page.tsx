@@ -1,14 +1,13 @@
 import Header from "@/components/header";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Card } from "@/components/ui/card";
+import { useParams } from "react-router-dom";
+
 import {
   TopicFullDetails,
   TopicLesson,
   TopicQuestion,
 } from "./topic-page";
 import LessonPartRenderer from "@/components/lesson-part-renderer";
-import { Button } from "@/components/ui/button";
 
 export interface LessonPart {
   type: "objectives" | "content" | "question" | "finished";
@@ -80,6 +79,10 @@ function LessonPage() {
     if (curIdx > 0) setCurIdx(curIdx - 1);
   };
 
+  const resetIdx = () => {
+    setCurIdx(0);
+  };
+
   return (
     <div className="bg-dot h-screen font-custom">
       <Header />
@@ -88,39 +91,20 @@ function LessonPage() {
           <div className="text-2xl">{lesson.lesson_title}</div>
           {parts.map((lp, i) => {
             return (
-              <div className="absolute top-12" hidden={i != curIdx}>
+              <div
+                key={i}
+                className="absolute top-12"
+                hidden={i != curIdx}
+              >
                 <LessonPartRenderer
-                  key={i}
                   lp={lp}
                   increaseIdx={increaseIdx}
                   decreaseIdx={decreaseIdx}
+                  resetIdx={resetIdx}
                 />
               </div>
             );
           })}
-          <div
-            className="absolute top-12"
-            hidden={curIdx != parts.length}
-          >
-            <Card className="w-md p-4 font-custom">
-              <p className="font-base text-lg text-center">
-                That's all for this topic! Generate more if you want to
-                learn more!
-              </p>
-              <div className="flex justify-end gap-2">
-                <Link to={"/topic/" + id}>
-                  <Button variant="secondary" className="w-24">
-                    Home
-                  </Button>
-                </Link>
-                <Link to="/generate-lessons">
-                  <Button variant="default" className="w-24">
-                    Generate
-                  </Button>
-                </Link>
-              </div>
-            </Card>
-          </div>
         </div>
       )}
     </div>
