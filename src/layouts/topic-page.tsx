@@ -45,6 +45,7 @@ function TopicPage() {
 
   const [topic, setTopic] = useState<TopicFullDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchTopic = async () => {
@@ -72,8 +73,14 @@ function TopicPage() {
         }
       }
     };
-    // Check topic in localStorage first
+
+    const fetchProgress = async () => {
+      const res = await api.get("/topic/progress/" + id);
+      setProgress(res.data.current_lesson);
+    };
+
     if (id) {
+      // Check topic in localStorage first
       const ls = localStorage.getItem(id);
       if (ls) {
         const parsedJson = JSON.parse(ls);
@@ -82,13 +89,16 @@ function TopicPage() {
       } else {
         fetchTopic();
       }
+
+      // Get or create current progress
+      fetchProgress();
     }
   }, [id]);
 
   return (
     <div className="bg-dot h-screen">
       <Header />
-      <div className="flex justify-center">
+      <div className="grid place-items-center h-screen">
         {topic && (
           <Card className="w-[350px] mt-24 shadow-md">
             <CardHeader>
@@ -109,7 +119,7 @@ function TopicPage() {
                       <LessonPreviewCard
                         key={index}
                         item={item}
-                        cur={10} // TODO: NEED TO MAKE THIS DYNAMIC
+                        cur={progress}
                       />
                     );
                   })}

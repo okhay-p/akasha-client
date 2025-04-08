@@ -15,12 +15,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
 
 const FormSchema = z.object({
   content: z
     .string()
     .min(10, {
-      message: "Content must be at least 30 characters.",
+      message: "Content must be at least 10 characters.",
     })
     .max(5000, {
       message: "Content must not be longer than 5000 characters.",
@@ -30,6 +31,7 @@ const FormSchema = z.object({
 function GenerateLessons() {
   const [topicId, setTopicId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -37,18 +39,26 @@ function GenerateLessons() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
-    const res = await api.post("/topic", data);
-
-    setTopicId(res.data.message);
+    try {
+      const res = await api.post("/topic", data);
+      setTopicId(res.data.message);
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.status === 400) {
+        setErrMsg(
+          (error.response?.data as { message: string })?.message ||
+            "An unknown error occurred",
+        );
+      }
+    }
   }
 
   return (
-    <>
+    <div className="bg-dot h-screen">
       <Header />
       <div className="p-2 flex mx-auto items-center flex-col max-w-lg m-24">
-        <p className="text-h1 mb-2 text-center">
+        <p className="mb-4 text-center text-foreground font-semibold font-custom text-4xl">
           Learn any topic with interactvie lessons
-          <br /> ✨
         </p>
         <Form {...form}>
           <form
@@ -62,8 +72,8 @@ function GenerateLessons() {
                 <FormItem>
                   <FormControl>
                     <Textarea
-                      placeholder="e.g. Teach me how to dougie"
-                      className="mb-2"
+                      placeholder="e.g. I want to learn about the history of calendars"
+                      className="mb-2 bg-background"
                       rows={12}
                       {...field}
                     />
@@ -88,8 +98,9 @@ function GenerateLessons() {
             </Button>
           </Link>
         )}
+        {errMsg && <p>{errMsg}</p>}
       </div>
-    </>
+    </div>
   );
 }
 

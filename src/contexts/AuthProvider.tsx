@@ -11,7 +11,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEV) {
       const storedToken = Cookies.get("token");
       if (storedToken) {
         setAuth(storedToken);
@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   const login = async () => {
     const res = await axios.post(import.meta.env.VITE_API + "/login");
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEV) {
       Cookies.set("token", res.data.auth);
       setIsAuthenticated(true);
       setAuth(res.data.auth);
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   };
 
   const logout = async () => {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_DEV) {
       Cookies.remove("token");
       localStorage.clear();
       setIsAuthenticated(false);

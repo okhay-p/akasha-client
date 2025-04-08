@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 import { Card } from "@/components/ui/card";
 import { TopicQuestion } from "@/layouts/topic-page";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "@/util/interceptor";
 
@@ -27,6 +27,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
   const qData = lp.data as TopicQuestion;
   const fData = lp.data as Array<string>;
 
+  const { id } = useParams();
   const handleAnswerClick = async (index: number) => {
     setSelectedAnswer(index);
 
@@ -59,13 +60,15 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
             );
           })}
           <div className="flex justify-end gap-2">
-            <Button
-              variant="secondary"
-              className="w-24"
-              onClick={decreaseIdx}
-            >
-              Prev
-            </Button>
+            <Link to={"/topic/" + id}>
+              <Button
+                variant="secondary"
+                className="w-24"
+                onClick={decreaseIdx}
+              >
+                Home
+              </Button>
+            </Link>
 
             <Button className="w-24" onClick={increaseIdx}>
               Next
@@ -140,7 +143,11 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
               Prev
             </Button>
 
-            <Button className="w-24" onClick={increaseIdx}>
+            <Button
+              className="w-24"
+              onClick={increaseIdx}
+              disabled={selectedAnswer === null}
+            >
               Next
             </Button>
           </div>

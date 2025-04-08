@@ -8,6 +8,7 @@ import {
   TopicQuestion,
 } from "./topic-page";
 import LessonPartRenderer from "@/components/lesson-part-renderer";
+import api from "@/util/interceptor";
 
 export interface LessonPart {
   type: "objectives" | "content" | "question" | "finished";
@@ -71,6 +72,12 @@ function LessonPage() {
     }
   }, [id, order]);
 
+  useEffect(() => {
+    if (curIdx === parts.length - 1) {
+      if (id && order) api.put("/topic/progress/" + id + "/" + order);
+    }
+  }, [id, curIdx, parts, order]);
+
   const increaseIdx = () => {
     if (curIdx < parts.length) setCurIdx(curIdx + 1);
   };
@@ -86,27 +93,29 @@ function LessonPage() {
   return (
     <div className="bg-dot h-screen font-custom">
       <Header />
-      {lesson && (
-        <div className="mt-8 flex justify-center relative">
-          <div className="text-2xl">{lesson.lesson_title}</div>
-          {parts.map((lp, i) => {
-            return (
-              <div
-                key={i}
-                className="absolute top-12"
-                hidden={i != curIdx}
-              >
-                <LessonPartRenderer
-                  lp={lp}
-                  increaseIdx={increaseIdx}
-                  decreaseIdx={decreaseIdx}
-                  resetIdx={resetIdx}
-                />
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <div className="grid place-items-center h-screen">
+        {lesson && (
+          <div className="flex justify-center relative min-h-[600px]">
+            <div className="text-2xl">{lesson.lesson_title}</div>
+            {parts.map((lp, i) => {
+              return (
+                <div
+                  key={i}
+                  className="absolute top-12"
+                  hidden={i != curIdx}
+                >
+                  <LessonPartRenderer
+                    lp={lp}
+                    increaseIdx={increaseIdx}
+                    decreaseIdx={decreaseIdx}
+                    resetIdx={resetIdx}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
