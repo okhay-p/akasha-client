@@ -11,16 +11,33 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (import.meta.env.VITE_DEV) {
-      const storedToken = Cookies.get("token");
-      if (storedToken) {
-        setAuth(storedToken);
-        setIsAuthenticated(true);
-        setLoading(false);
+    const verifyUser = async () => {
+      if (import.meta.env.VITE_DEV) {
+        const storedToken = Cookies.get("token");
+        if (storedToken) {
+          setAuth(storedToken);
+          setIsAuthenticated(true);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
       } else {
-        setLoading(false);
+        // do api req to fetch profile
+        try {
+          const res = await axios.get(
+            import.meta.env.VITE_API + "/user/profile",
+          );
+          console.log(res);
+          setIsAuthenticated(true);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
       }
-    }
+    };
+
+    verifyUser();
   }, []);
 
   const login = async () => {
