@@ -12,7 +12,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   useEffect(() => {
     const verifyUser = async () => {
-      if (import.meta.env.VITE_DEV) {
+      if (import.meta.env.VITE_DEV == "true") {
         const storedToken = Cookies.get("token");
         if (storedToken) {
           setAuth(storedToken);
