@@ -15,9 +15,11 @@ api.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
 
-    if (token && import.meta.env.VITE_DEV) {
+    if (token && import.meta.env.VITE_DEV == "true") {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
+
+    config.withCredentials = true;
 
     return config;
   },

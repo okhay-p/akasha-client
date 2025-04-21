@@ -28,6 +28,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
         try {
           const res = await axios.get(
             import.meta.env.VITE_API + "/user/profile",
+            {
+              withCredentials: true,
+            },
           );
           console.log(res);
           setIsAuthenticated(true);
