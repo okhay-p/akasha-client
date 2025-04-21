@@ -10,9 +10,11 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   const [auth, setAuth] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const isDev = import.meta.env.VITE_DEV == "true";
+
   useEffect(() => {
     const verifyUser = async () => {
-      if (import.meta.env.VITE_DEV == "true") {
+      if (isDev) {
         const storedToken = Cookies.get("token");
         if (storedToken) {
           setAuth(storedToken);
@@ -38,11 +40,11 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
     };
 
     verifyUser();
-  }, []);
+  }, [isDev]);
 
   const login = async () => {
     const res = await axios.post(import.meta.env.VITE_API + "/login");
-    if (import.meta.env.VITE_DEV) {
+    if (isDev) {
       Cookies.set("token", res.data.auth);
       setIsAuthenticated(true);
       setAuth(res.data.auth);
@@ -50,11 +52,13 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   };
 
   const logout = async () => {
-    if (import.meta.env.VITE_DEV) {
+    if (isDev) {
       Cookies.remove("token");
       localStorage.clear();
       setIsAuthenticated(false);
       setAuth("");
+    } else {
+      await axios.get(import.meta.env.VITE_API + "/logout");
     }
   };
 
