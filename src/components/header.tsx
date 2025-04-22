@@ -44,7 +44,8 @@ function Header() {
           Generate
         </NavLink>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-row-reverse items-center gap-2">
+        <ModeToggle />
         {isAuthenticated ? (
           <Avatar
             onClick={() => logout()}
@@ -65,8 +66,6 @@ function Header() {
             </div>
           </Button>
         )}
-
-        <ModeToggle />
       </div>
     </div>
   );
