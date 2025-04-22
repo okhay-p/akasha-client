@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
               withCredentials: true,
             },
           );
-          console.log(res);
+          setUserData(res.data);
           setIsAuthenticated(true);
         } catch (error) {
           setIsAuthenticated(false);
