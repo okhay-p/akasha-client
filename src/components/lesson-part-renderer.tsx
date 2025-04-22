@@ -12,9 +12,15 @@ interface Props {
   increaseIdx: () => void;
   decreaseIdx: () => void;
   resetIdx: () => void;
+  className: string;
 }
 
-function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
+function LessonPartRenderer({
+  className,
+  lp,
+  increaseIdx,
+  decreaseIdx,
+}: Props) {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(
     null,
   );
@@ -48,7 +54,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
   switch (lp.type) {
     case "objectives":
       return (
-        <Card className="w-[350px] sm:w-md p-4 font-custom">
+        <Card className={className}>
           <p className="font-semibold text-lg text-center">
             Objectives
           </p>
@@ -80,7 +86,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
       senArr = cData.split(". ");
 
       return (
-        <Card className="w-[350px] sm:w-md p-4 font-custom">
+        <Card className={className}>
           {senArr &&
             senArr.map((s, i) => {
               return (
@@ -106,7 +112,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
       );
     case "question":
       return (
-        <Card className="w-[350px] sm:w-md p-4 font-custom">
+        <Card className={className}>
           <p className="font-base text-lg text-center">
             {qData.question_text}
           </p>
@@ -156,7 +162,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
 
     case "finished":
       return (
-        <Card className="w-[350px] sm:w-md font-custom p-4">
+        <Card className={className}>
           <p className="font-base text-lg text-center">
             Congratulations 🥳 <br /> You have finished the lesson!
           </p>

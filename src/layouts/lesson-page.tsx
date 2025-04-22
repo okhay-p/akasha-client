@@ -91,31 +91,36 @@ function LessonPage() {
   };
 
   return (
-    <div className="bg-dot h-screen font-custom">
+    <div className="bg-dot h-screen font-custom overflow-x-hidden">
       <Header />
-      <div className="mx-auto grid place-items-center h-screen max-w-[90%]">
-        {lesson && (
-          <div className="flex justify-center relative min-h-[620px] sm:min-h-[600px]">
-            <div className="text-2xl">{lesson.lesson_title}</div>
-            {parts.map((lp, i) => {
-              return (
-                <div
-                  key={i}
-                  className="absolute top-10 sm:top-12"
-                  hidden={i != curIdx}
-                >
-                  <LessonPartRenderer
-                    lp={lp}
-                    increaseIdx={increaseIdx}
-                    decreaseIdx={decreaseIdx}
-                    resetIdx={resetIdx}
-                  />
-                </div>
-              );
-            })}
+      {lesson && (
+        <div className="mx-auto flex flex-col justify-items-center mt-4 sm:mt-8 md:mt-16">
+          <div>
+            <div className="text-center text-2xl px-8">
+              {lesson.lesson_title}
+            </div>
+            <div className="relative w-svw h-[200px]">
+              {parts.map((lp, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="absolute left-[50%]"
+                    hidden={i != curIdx}
+                  >
+                    <LessonPartRenderer
+                      lp={lp}
+                      increaseIdx={increaseIdx}
+                      decreaseIdx={decreaseIdx}
+                      resetIdx={resetIdx}
+                      className="w-[350px] sm:w-md p-4 font-custom -ml-[50%]"
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
