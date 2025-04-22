@@ -6,12 +6,7 @@ interface Props {
 }
 
 function ProtectedRoute({ children }: Props) {
-  const { loading, isAuthenticated } = useAuth();
-
-  if (loading) {
-    // Render a loading indicator while the authentication state is being checked
-    return <div>Loading...</div>;
-  }
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace={true} />;

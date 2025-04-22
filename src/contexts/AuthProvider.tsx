@@ -2,6 +2,7 @@ import React, { useState, useEffect, PropsWithChildren } from "react";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { LoaderCircle } from "lucide-react";
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -15,6 +16,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   useEffect(() => {
     const verifyUser = async () => {
       if (isDev) {
+        // await new Promise((resolve) => setTimeout(resolve, 5000));
         const storedToken = Cookies.get("token");
         if (storedToken) {
           setAuth(storedToken);
@@ -24,7 +26,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           setLoading(false);
         }
       } else {
-        // do api req to fetch profile
         try {
           const res = await axios.get(
             import.meta.env.VITE_API + "/user/profile",
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           console.log(res);
           setIsAuthenticated(true);
         } catch (error) {
-          console.log(error);
+          setIsAuthenticated(false);
         } finally {
           setLoading(false);
         }
@@ -47,11 +48,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   const login = async () => {
     const res = await axios.post(import.meta.env.VITE_API + "/login");
-    if (isDev) {
-      Cookies.set("token", res.data.auth);
-      setIsAuthenticated(true);
-      setAuth(res.data.auth);
-    }
+    Cookies.set("token", res.data.auth);
+    setIsAuthenticated(true);
+    setAuth(res.data.auth);
   };
 
   const logout = async () => {
@@ -62,6 +61,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
       setAuth("");
     } else {
       await axios.get(import.meta.env.VITE_API + "/logout");
+      localStorage.clear();
       setIsAuthenticated(false);
       setAuth("");
     }
@@ -75,9 +75,22 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
     logout,
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen grid place-items-center bg-gray-500">
+        <div>
+          <p>Checking Important Information</p>
+          <div className="text-lg animate-spin grid place-items-center">
+            <LoaderCircle />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {loading ? <div className="loader">Loading</div> : children}
     </AuthContext.Provider>
   );
 };

@@ -5,10 +5,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, login } = useAuth();
 
   const handleGoogleOAuthLogin = () => {
-    window.location.href = import.meta.env.VITE_API + "/auth/google";
+    if (import.meta.env.VITE_DEV == "true") {
+      login();
+    } else {
+      window.location.href = import.meta.env.VITE_API + "/auth/google";
+    }
   };
 
   return (
