@@ -11,7 +11,7 @@ function LessonPreviewCard({ item, cur }: LessonPreviewCardProps) {
   return (
     <Link to={item.lesson_order.toString()}>
       <Button
-        className="h-[60px] w-[100%] flex items-center p-2 font-custom font-semibold justify-between"
+        className="h-[60px] w-[100%] flex items-center p-2 font-custom font-medium justify-between"
         variant="outline"
         disabled={item.lesson_order > cur}
       >

@@ -2,10 +2,16 @@ import { ModeToggle } from "@/components/mode-toggle";
 import FullLogo from "@/components/full-logo";
 import { Button } from "./ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import googleLogo from "@/assets/google-logo.svg";
 
 function Header() {
-  const { isAuthenticated, logout, login } = useAuth();
+  const { isAuthenticated, logout, login, userData } = useAuth();
 
   const handleGoogleOAuthLogin = () => {
     if (import.meta.env.VITE_DEV == "true") {
@@ -20,34 +26,43 @@ function Header() {
       <div className="pl-2">
         <FullLogo />
       </div>
-      <div className="w-sm mx-1">
-        <Link to="/all-topics">
-          <Button variant="link" className="text-foreground/30">
-            Browse
-          </Button>
-        </Link>
-        <Link to="/generate-lessons">
-          <Button variant="link" className="text-foreground/30">
-            Generate
-          </Button>
-        </Link>
+      <div className="w-sm mx-1 flex gap-3 text-sm">
+        <NavLink
+          to="/all-topics"
+          className={({ isActive }) =>
+            isActive ? "text-foreground" : "text-foreground/30"
+          }
+        >
+          Browse
+        </NavLink>
+        <NavLink
+          to="/generate-lessons"
+          className={({ isActive }) =>
+            isActive ? "text-foreground" : "text-foreground/30"
+          }
+        >
+          Generate
+        </NavLink>
       </div>
       <div className="flex items-center gap-2">
         {isAuthenticated ? (
-          <Button
-            variant="outline"
-            className="text-xs w-[80px]"
+          <Avatar
             onClick={() => logout()}
+            className="hover:cursor-pointer border-border border-1 size-9 shadow-sm"
           >
-            Log out
-          </Button>
+            <AvatarImage src={userData?.picture_url} />
+            <AvatarFallback>{userData?.email[0]}</AvatarFallback>
+          </Avatar>
         ) : (
           <Button
             variant="outline"
-            className="text-xs w-[80px]"
+            className="text-xs"
             onClick={handleGoogleOAuthLogin}
           >
-            Sign In
+            <div className="flex gap-1 items-center">
+              <img className="size-7" src={googleLogo} />
+              Sign In
+            </div>
           </Button>
         )}
 

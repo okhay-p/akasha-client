@@ -3,6 +3,7 @@ import { AuthContext, AuthContextValue } from "./AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { LoaderCircle } from "lucide-react";
+import api from "@/util/interceptor";
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -10,13 +11,20 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [auth, setAuth] = useState("");
   const [loading, setLoading] = useState(true);
-
+  const [userData, setUserData] = useState(null);
   const isDev = import.meta.env.VITE_DEV == "true";
 
   useEffect(() => {
     const verifyUser = async () => {
       if (isDev) {
         // await new Promise((resolve) => setTimeout(resolve, 5000));
+        try {
+          const res = await api.get("/user/profile");
+          setUserData(res.data);
+        } catch (error) {
+          setLoading(false);
+        }
+
         const storedToken = Cookies.get("token");
         if (storedToken) {
           setAuth(storedToken);
@@ -73,7 +81,10 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
     auth,
     login,
     logout,
+    userData,
   };
+
+  console.log(userData);
 
   if (loading) {
     return (
@@ -90,7 +101,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   return (
     <AuthContext.Provider value={value}>
-      {loading ? <div className="loader">Loading</div> : children}
+      {children}
     </AuthContext.Provider>
   );
 };

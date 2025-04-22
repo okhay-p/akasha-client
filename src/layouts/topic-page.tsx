@@ -102,7 +102,7 @@ function TopicPage() {
         {topic && (
           <Card className="w-[350px] max-w-[90%] mt-24 shadow-md">
             <CardHeader>
-              <CardTitle className="font-custom mb-1">
+              <CardTitle className="font-custom mb-1 font-medium">
                 <div className="inline border rounded-sm p-1 mr-1 shadow-sm">
                   {topic.emoji}
                 </div>

@@ -156,7 +156,7 @@ function LessonPartRenderer({ lp, increaseIdx, decreaseIdx }: Props) {
 
     case "finished":
       return (
-        <Card className="w-[350px] sm:w-md font-custom">
+        <Card className="w-[350px] sm:w-md font-custom p-4">
           <p className="font-base text-lg text-center">
             Congratulations 🥳 <br /> You have finished the lesson!
           </p>
