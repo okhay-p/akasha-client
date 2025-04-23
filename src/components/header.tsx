@@ -11,7 +11,7 @@ import {
 import googleLogo from "@/assets/google-logo.svg";
 
 function Header() {
-  const { isAuthenticated, logout, login, userData } = useAuth();
+  const { isAuthenticated, login, userData } = useAuth();
 
   const handleGoogleOAuthLogin = () => {
     if (import.meta.env.VITE_DEV == "true") {
@@ -48,8 +48,8 @@ function Header() {
         <ModeToggle />
         {isAuthenticated ? (
           <Avatar
-            onClick={() => logout()}
-            className="hover:cursor-pointer border-border border-1 size-9 shadow-sm"
+            // onClick={() => logout()}
+            className="border-border border-1 size-9 shadow-sm"
           >
             <AvatarImage src={userData?.picture_url} />
             <AvatarFallback>{userData?.email[0]}</AvatarFallback>

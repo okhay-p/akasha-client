@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import api from "@/util/interceptor";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -96,8 +95,7 @@ function TopicPage() {
   }, [id]);
 
   return (
-    <div className="bg-dot h-screen">
-      <Header />
+    <div className="h-screen">
       <div className="grid place-items-center h-screen">
         {topic && (
           <Card className="w-[350px] max-w-[90%] mt-24 shadow-md">

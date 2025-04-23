@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import api from "@/util/interceptor";
@@ -54,8 +53,7 @@ function GenerateLessons() {
   }
 
   return (
-    <div className="bg-dot h-screen">
-      <Header />
+    <div className="h-screen">
       <div className="p-2 flex mx-auto items-center flex-col max-w-lg m-24">
         <p className="mb-4 text-center text-foreground font-semibold font-custom text-4xl">
           Learn any topic with interactvie lessons

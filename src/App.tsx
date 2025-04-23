@@ -8,10 +8,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 /* PAGE IMPORTS */
 import Landing from "./layouts/landing";
 import GenerateLessons from "@/layouts/generate-lessons";
-import ProtectedRoute from "@/components/protected-route";
 import TopicPage from "@/layouts/topic-page";
 import LessonPage from "@/layouts/lesson-page";
 import AllTopicsPage from "@/layouts/all-topics-page";
+import Dashboard from "./layouts/dashboard";
 
 function App() {
   return (
@@ -19,38 +19,15 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route
-            path="/generate-lessons"
-            element={
-              <ProtectedRoute>
-                <GenerateLessons />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/topic/:id"
-            element={
-              <ProtectedRoute>
-                <TopicPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/topic/:id/:order"
-            element={
-              <ProtectedRoute>
-                <LessonPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/all-topics/"
-            element={
-              <ProtectedRoute>
-                <AllTopicsPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route element={<Dashboard />}>
+            <Route
+              path="/generate-lessons"
+              element={<GenerateLessons />}
+            />
+            <Route path="/topic/:id" element={<TopicPage />} />
+            <Route path="/topic/:id/:order" element={<LessonPage />} />
+            <Route path="/all-topics/" element={<AllTopicsPage />} />
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

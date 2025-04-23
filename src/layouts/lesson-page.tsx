@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -91,33 +90,26 @@ function LessonPage() {
   };
 
   return (
-    <div className="bg-dot h-screen font-custom overflow-x-hidden">
-      <Header />
+    <div className="h-screen font-custom overflow-x-hidden">
       {lesson && (
         <div className="mx-auto flex flex-col justify-items-center mt-4 sm:mt-8 md:mt-16">
-          <div>
-            <div className="text-center text-2xl px-8">
-              {lesson.lesson_title}
-            </div>
-            <div className="relative w-svw h-[200px]">
-              {parts.map((lp, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="absolute left-[50%]"
-                    hidden={i != curIdx}
-                  >
-                    <LessonPartRenderer
-                      lp={lp}
-                      increaseIdx={increaseIdx}
-                      decreaseIdx={decreaseIdx}
-                      resetIdx={resetIdx}
-                      className="w-[350px] sm:w-md p-4 font-custom -ml-[50%]"
-                    />
-                  </div>
-                );
-              })}
-            </div>
+          <div className="text-center text-2xl px-8">
+            {lesson.lesson_title}
+          </div>
+          <div className="mx-auto">
+            {parts.map((lp, i) => {
+              return (
+                <div key={i} hidden={i != curIdx}>
+                  <LessonPartRenderer
+                    lp={lp}
+                    increaseIdx={increaseIdx}
+                    decreaseIdx={decreaseIdx}
+                    resetIdx={resetIdx}
+                    className="w-[350px] sm:w-md p-4 font-custom"
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

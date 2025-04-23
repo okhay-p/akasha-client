@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import TopicPreview, { TopicL1 } from "@/components/topic-preview";
 import api from "@/util/interceptor";
 import { useEffect, useState } from "react";
@@ -20,8 +19,7 @@ function AllTopicsPage() {
   }, []);
 
   return (
-    <div className="h-screen bg-dot">
-      <Header />
+    <div className="h-screen">
       <div className="max-w-[1400px] mx-auto">
         <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 p-2">
           {topics &&
