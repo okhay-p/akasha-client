@@ -124,15 +124,16 @@ function LessonPartRenderer({
                   key={i}
                   onClick={() => handleAnswerClick(i)}
                   className={
-                    selectedAnswer === i
+                    "w-[95%] mx-auto h-16 sm:h-12 " +
+                    (selectedAnswer === i
                       ? isCorrect
-                        ? "bg-green-300"
-                        : "bg-red-300"
-                      : ""
+                        ? "bg-green-300 dark:bg-green-950"
+                        : "bg-red-300 dark:bg-red-950"
+                      : "")
                   }
                   disabled={selectedAnswer === i}
                 >
-                  {o}
+                  <p className="text-wrap">{o}</p>
                 </Button>
               );
             })}

@@ -22,6 +22,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           const res = await api.get("/user/profile");
           setUserData(res.data);
         } catch (error) {
+          console.log(error);
           setLoading(false);
         }
 
@@ -44,6 +45,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           setUserData(res.data);
           setIsAuthenticated(true);
         } catch (error) {
+          console.log(error);
           setIsAuthenticated(false);
         } finally {
           setLoading(false);
