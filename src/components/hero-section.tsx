@@ -19,7 +19,7 @@ export function HeroSection() {
             personalized AI guidance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" asChild onClick={login}>
+            <Button size="lg" onClick={login}>
               <>
                 Get Started With{" "}
                 <img
