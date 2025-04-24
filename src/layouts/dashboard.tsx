@@ -1,10 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -18,19 +15,22 @@ export default function Dashboard() {
   }
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-14 shrink-0 items-center gap-2">
-          <div className="flex flex-1 items-center gap-2 px-3">
-            <SidebarTrigger />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-          </div>
-        </header>
+    <SidebarProvider className="flex flex-col">
+      <SiteHeader />
+      <div className="flex flex-1">
+        <AppSidebar />
 
-        {/* MAIN SECTION */}
-        <Outlet />
-      </SidebarInset>
+        <SidebarInset>
+          <header className="flex h-14 shrink-0 items-center gap-2">
+            <div className="flex flex-1 items-center gap-2 px-3">
+              <Separator orientation="vertical" className="mr-2 h-4" />
+            </div>
+          </header>
+
+          {/* MAIN SECTION */}
+          <Outlet />
+        </SidebarInset>
+      </div>
     </SidebarProvider>
   );
 }

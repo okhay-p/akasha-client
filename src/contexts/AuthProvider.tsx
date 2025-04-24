@@ -63,6 +63,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
     Cookies.set("token", res.data.auth);
     setIsAuthenticated(true);
     setAuth(res.data.auth);
+    location.href = "/generate-lessons";
   };
 
   const logout = async () => {

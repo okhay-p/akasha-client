@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import FullLogo from "@/components/full-logo";
 
 import { LogOut, RotateCw, ScanEye, Sparkles } from "lucide-react";
 
@@ -17,7 +16,6 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
-import { ModeToggle } from "./mode-toggle";
 import api from "@/util/interceptor";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -67,12 +65,11 @@ export function AppSidebar({
   }, []);
 
   return (
-    <Sidebar className="border-r-0 font-custom" {...props}>
+    <Sidebar
+      className="border-r-0 font-custom top-[48px] h-[calc(100svh-48px)]"
+      {...props}
+    >
       <SidebarHeader>
-        <div className="flex justify-between align-center pt-2 pl-2">
-          <FullLogo />
-          <ModeToggle />
-        </div>
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>

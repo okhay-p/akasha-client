@@ -26,15 +26,19 @@ function Header() {
       <div className="pl-2">
         <FullLogo />
       </div>
-      <div className="w-sm mx-1 flex gap-3 text-sm">
-        <NavLink
+
+      <div
+        className="w-sm mx-1 flex gap-3 text-sm"
+        hidden={!isAuthenticated}
+      >
+        {/* <NavLink
           to="/all-topics"
           className={({ isActive }) =>
             isActive ? "text-foreground" : "text-foreground/30"
           }
         >
           Browse
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/generate-lessons"
           className={({ isActive }) =>

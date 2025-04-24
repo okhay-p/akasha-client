@@ -1,31 +1,26 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
-import api from "@/util/interceptor";
-import { useState } from "react";
+
+import { HeroSection } from "@/components/hero-section";
+import { FeaturesSection } from "@/components/features-section";
+import { HowItWorksSection } from "@/components/how-it-works-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
+import { PricingSection } from "@/components/pricing-section";
+import { FaqSection } from "@/components/faq-section";
+import { Footer } from "@/components/footer";
 
 function Landing() {
-  const [apiStatus, setApiStatus] = useState("");
-
-  const testApi = async () => {
-    const res = await api.get("/");
-    console.log(res);
-    setApiStatus(res.data.message);
-  };
-
   return (
-    <div className="bg-dot h-dvh">
+    <div className="min-h-screen">
       <Header />
-      <div className="font-custom-sans text-center flex flex-col items-center gap-2 mt-40">
-        <Link to="/generate-lessons">
-          <Button>Generate Lessons</Button>
-        </Link>
-        <Link to="/topic/0ab588ab-71aa-4025-835d-85e47486c5b7">
-          <Button>test topic</Button>
-        </Link>
-        <Button onClick={testApi}>API Testing</Button>
-        {apiStatus && <p>{apiStatus}</p>}
-      </div>
+      <main className="">
+        <HeroSection />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <TestimonialsSection />
+        <PricingSection />
+        <FaqSection />
+      </main>
+      <Footer />
     </div>
   );
 }
