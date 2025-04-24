@@ -1,17 +1,9 @@
-import {
-  ArrowUpRight,
-  CircleMinus,
-  Link,
-  MoreHorizontal,
-  StarOff,
-  Trash2,
-} from "lucide-react";
+import { CircleMinus, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -24,7 +16,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
-import { Button } from "./ui/button";
 
 export function NavMyTopics({
   topics,
