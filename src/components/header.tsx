@@ -13,14 +13,6 @@ import googleLogo from "@/assets/google-logo.svg";
 function Header() {
   const { isAuthenticated, login, userData } = useAuth();
 
-  const handleGoogleOAuthLogin = () => {
-    if (import.meta.env.VITE_DEV == "true") {
-      login();
-    } else {
-      window.location.href = import.meta.env.VITE_API + "/auth/google";
-    }
-  };
-
   return (
     <div className="max-w-3xl mx-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 md:top-2 flex justify-between items-center p-2 border-b md:border md:rounded-4xl shadow-md md:shadow-xl shadow-primary/20 z-10 font-custom-sans">
       <div className="pl-2">
@@ -59,11 +51,7 @@ function Header() {
             <AvatarFallback>{userData?.email[0]}</AvatarFallback>
           </Avatar>
         ) : (
-          <Button
-            variant="outline"
-            className="text-xs"
-            onClick={handleGoogleOAuthLogin}
-          >
+          <Button variant="outline" className="text-xs" onClick={login}>
             <div className="flex gap-1 items-center">
               <img className="size-7" src={googleLogo} />
               Sign In

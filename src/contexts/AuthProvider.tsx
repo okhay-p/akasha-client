@@ -59,11 +59,15 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   }, [isDev]);
 
   const login = async () => {
-    const res = await axios.post(import.meta.env.VITE_API + "/login");
-    Cookies.set("token", res.data.auth);
-    setIsAuthenticated(true);
-    setAuth(res.data.auth);
-    location.href = "/generate-lessons";
+    if (import.meta.env.VITE_DEV == "true") {
+      const res = await axios.post(import.meta.env.VITE_API + "/login");
+      Cookies.set("token", res.data.auth);
+      setIsAuthenticated(true);
+      setAuth(res.data.auth);
+      location.href = "/generate-lessons";
+    } else {
+      window.location.href = import.meta.env.VITE_API + "/auth/google";
+    }
   };
 
   const logout = async () => {
