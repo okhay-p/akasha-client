@@ -1,4 +1,7 @@
 import { Check } from "lucide-react";
+import step1 from "@/assets/step1.png";
+import step2 from "@/assets/step2.png";
+import step3 from "@/assets/step3.png";
 
 export function HowItWorksSection() {
   const steps = [
@@ -7,7 +10,7 @@ export function HowItWorksSection() {
       title: "Tell us what you want to learn",
       description:
         "Enter any topic or subject you're interested in learning about.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: step1,
       features: [
         "Any subject or topic",
         "Any difficulty level",
@@ -19,7 +22,7 @@ export function HowItWorksSection() {
       title: "AI generates personalized lessons",
       description:
         "Our AI creates custom lessons tailored to your learning style and pace.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: step2,
       features: [
         "Interactive content",
         "Multimedia resources",
@@ -31,7 +34,7 @@ export function HowItWorksSection() {
       title: "Learn and get real-time feedback",
       description:
         "Practice with exercises and quizzes while receiving instant AI feedback.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: step3,
       features: [
         "Instant corrections",
         "Progress tracking",
@@ -45,7 +48,7 @@ export function HowItWorksSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            How LearnAI Works
+            How AkashaLearn Works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Three simple steps to transform the way you learn with our
@@ -84,12 +87,12 @@ export function HowItWorksSection() {
                 </ul>
               </div>
               <div
-                className={`relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-lg ${index % 2 !== 0 ? "md:order-1" : ""}`}
+                className={`relative aspect-video rounded-lg overflow-hidden shadow-lg ${index % 2 !== 0 ? "md:order-1" : ""}`}
               >
                 <img
                   src={step.image || "/placeholder.svg"}
                   alt={`Step ${step.number}: ${step.title}`}
-                  className="object-cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
             </div>

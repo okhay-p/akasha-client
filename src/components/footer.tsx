@@ -13,7 +13,7 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <div className="font-bold text-2xl mb-4">LearnAI</div>
+            <div className="font-bold text-2xl mb-4">AkashaLearn</div>
             <p className="text-muted-foreground mb-4">
               Personalized AI-powered learning for everyone, anywhere,
               anytime.

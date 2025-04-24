@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import googleLogo from "@/assets/google-logo.svg";
+import preview1 from "@/assets/preview1.png";
 
 export function HeroSection() {
   return (
@@ -11,8 +12,8 @@ export function HeroSection() {
             Learn Anything with AI-Powered Personalized Lessons
           </h1>
           <p className="text-lg text-muted-foreground">
-            LearnAI generates custom lessons tailored to your interests,
-            learning style, and pace. Master any subject with
+            AkashaLearn generates custom lessons tailored to your
+            interests, learning style, and pace. Master any subject with
             personalized AI guidance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -34,9 +35,9 @@ export function HeroSection() {
             No credit card required • Free 7-day trial
           </div> */}
         </div>
-        <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
+        <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl">
           <img
-            src="/placeholder.svg?height=800&width=600"
+            src={preview1}
             alt="AI Learning Platform Interface"
             className="object-cover"
           />

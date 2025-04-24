@@ -10,17 +10,17 @@ import { Footer } from "@/components/footer";
 
 function Landing() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen font-custom">
       <Header />
       <main className="">
         <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />
-        <TestimonialsSection />
-        <PricingSection />
-        <FaqSection />
+        {/* <TestimonialsSection /> */}
+        {/* <PricingSection /> */}
+        {/* <FaqSection /> */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
