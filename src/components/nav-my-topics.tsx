@@ -16,7 +16,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
-import { AlertDialog } from "./ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 export function NavMyTopics({
   topics,
@@ -48,32 +58,48 @@ export function NavMyTopics({
                 </SidebarMenuButton>
               )}
             </NavLink>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
-                  <MoreHorizontal />
-                  <span className="sr-only">More</span>
-                </SidebarMenuAction>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56 rounded-lg"
-                side={isMobile ? "bottom" : "right"}
-                align={isMobile ? "end" : "start"}
-              >
-                <DropdownMenuItem
-                  onClick={() => {
-                    deleteProgress(item.id);
-                  }}
+            <AlertDialog>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuAction showOnHover>
+                    <MoreHorizontal />
+                    <span className="sr-only">More</span>
+                  </SidebarMenuAction>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-56 rounded-lg"
+                  side={isMobile ? "bottom" : "right"}
+                  align={isMobile ? "end" : "start"}
                 >
-                  <CircleMinus className="text-muted-foreground" />
-                  <span>Remove from My Topics</span>
-                </DropdownMenuItem>
-                {/* <DropdownMenuItem>
+                  <AlertDialogTrigger>
+                    <DropdownMenuItem>
+                      <CircleMinus className="text-muted-foreground" />
+                      <span>Remove from My Topics</span>
+                    </DropdownMenuItem>
+                  </AlertDialogTrigger>
+                  {/* <DropdownMenuItem>
                   <Link className="text-muted-foreground" />
                   <span>Copy Link</span>
                 </DropdownMenuItem> */}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Yor progress will be reset for this topic.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => deleteProgress(item.id)}
+                  >
+                    Remove
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </SidebarMenuItem>
         ))}
       </SidebarMenu>
