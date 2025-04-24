@@ -35,19 +35,16 @@ export function SiteHeader() {
         <div className="ml-auto w-auto">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button
-                variant="ghost"
-                className="flex items-center text-lg my-2"
-              >
+              <div className="flex items-center text-lg my-2 rounded-xl py-1 px-3 hover:bg-muted hover:cursor-pointer">
                 <Avatar
                   // onClick={() => logout()}
-                  className="border-border border-1 size-7 shadow-sm"
+                  className="border-border border-1 size-7 shadow-sm mr-1"
                 >
                   <AvatarImage src={userData?.picture_url} />
                   <AvatarFallback>{userData?.email[0]}</AvatarFallback>
                 </Avatar>
                 {userData?.username}
-              </Button>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>

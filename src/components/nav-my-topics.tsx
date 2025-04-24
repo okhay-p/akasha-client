@@ -16,15 +16,18 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
+import { AlertDialog } from "./ui/alert-dialog";
 
 export function NavMyTopics({
   topics,
+  deleteProgress,
 }: {
   topics: {
     title: string;
     id: string;
     emoji: string;
   }[];
+  deleteProgress: (id: string) => void;
 }) {
   const { isMobile } = useSidebar();
 
@@ -57,7 +60,11 @@ export function NavMyTopics({
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    deleteProgress(item.id);
+                  }}
+                >
                   <CircleMinus className="text-muted-foreground" />
                   <span>Remove from My Topics</span>
                 </DropdownMenuItem>

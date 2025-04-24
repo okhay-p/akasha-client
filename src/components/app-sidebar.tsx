@@ -20,7 +20,6 @@ import api from "@/util/interceptor";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-// This is sample data.
 const data = {
   navMain: [
     {
@@ -60,6 +59,11 @@ export function AppSidebar({
     }
   };
 
+  const deleteProgress = async (id: string) => {
+    await api.delete("/topic/progress/" + id);
+    fetchMyTopics();
+  };
+
   useEffect(() => {
     fetchMyTopics();
   }, []);
@@ -73,7 +77,10 @@ export function AppSidebar({
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMyTopics topics={myTopics} />
+        <NavMyTopics
+          topics={myTopics}
+          deleteProgress={deleteProgress}
+        />
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
