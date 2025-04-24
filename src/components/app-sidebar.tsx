@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { LogOut, RotateCw, ScanEye, Sparkles } from "lucide-react";
+import {
+  LogOut,
+  MessageCircleMore,
+  RotateCw,
+  ScanEye,
+  Sparkles,
+} from "lucide-react";
 
 import { NavMyTopics } from "@/components/nav-my-topics";
 import { NavMain } from "@/components/nav-main";
@@ -19,6 +25,7 @@ import {
 import api from "@/util/interceptor";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { NavLink } from "react-router-dom";
 
 const data = {
   navMain: [
@@ -85,6 +92,19 @@ export function AppSidebar({
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem key="feedback">
+                <NavLink to="/feedback">
+                  {({ isActive }) => (
+                    <SidebarMenuButton
+                      isActive={isActive}
+                      className="hover:cursor-pointer"
+                    >
+                      <MessageCircleMore />
+                      Feedback
+                    </SidebarMenuButton>
+                  )}
+                </NavLink>
+              </SidebarMenuItem>
               <SidebarMenuItem
                 key="refresh"
                 className="hover:cursor-pointer"

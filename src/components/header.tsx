@@ -19,10 +19,7 @@ function Header() {
         <FullLogo />
       </div>
 
-      <div
-        className="w-sm mx-1 flex gap-3 text-sm"
-        hidden={!isAuthenticated}
-      >
+      <div className="w-sm mx-1 flex gap-3 text-sm">
         {/* <NavLink
           to="/all-topics"
           className={({ isActive }) =>
@@ -32,12 +29,21 @@ function Header() {
           Browse
         </NavLink> */}
         <NavLink
+          to="/feedback"
+          className={({ isActive }) =>
+            isActive ? "text-foreground" : "text-foreground/30"
+          }
+        >
+          Feedback
+        </NavLink>
+        <NavLink
+          hidden={!isAuthenticated}
           to="/generate-lessons"
           className={({ isActive }) =>
             isActive ? "text-foreground" : "text-foreground/30"
           }
         >
-          Generate
+          Dashboard
         </NavLink>
       </div>
       <div className="flex flex-row-reverse items-center gap-2">
