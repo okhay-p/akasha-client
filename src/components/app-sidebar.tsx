@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FullLogo from "@/components/full-logo";
 
-import { LogOut, ScanEye, Sparkles } from "lucide-react";
+import { LogOut, RotateCw, ScanEye, Sparkles } from "lucide-react";
 
 import { NavMyTopics } from "@/components/nav-my-topics";
 import { NavMain } from "@/components/nav-main";
@@ -53,16 +53,16 @@ export function AppSidebar({
 
   const { logout } = useAuth();
 
-  useEffect(() => {
-    const fetchMyTopics = async () => {
-      try {
-        const res = await api.get("/topic/progress");
-        setMyTopics(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchMyTopics = async () => {
+    try {
+      const res = await api.get("/topic/progress");
+      setMyTopics(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
     fetchMyTopics();
   }, []);
 
@@ -81,6 +81,20 @@ export function AppSidebar({
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem
+                key="refresh"
+                className="hover:cursor-pointer"
+                onClick={() => {
+                  fetchMyTopics();
+                }}
+              >
+                <SidebarMenuButton asChild>
+                  <div>
+                    <RotateCw />
+                    <span>Refresh My Topics</span>
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem
                 key="logout"
                 className="hover:cursor-pointer"
