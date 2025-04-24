@@ -23,6 +23,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           setUserData(res.data);
         } catch (error) {
           console.log(error);
+          localStorage.clear();
           setLoading(false);
         }
 
@@ -46,6 +47,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
           setIsAuthenticated(true);
         } catch (error) {
           console.log(error);
+          localStorage.clear();
           setIsAuthenticated(false);
         } finally {
           setLoading(false);
