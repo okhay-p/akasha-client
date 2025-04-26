@@ -3,10 +3,12 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import type { TextareaProps } from "@/components/ui/textarea";
 
 export interface AutoResizeTextareaProps
-  extends Omit<TextareaProps, "onChange"> {
+  extends Omit<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    "onChange"
+  > {
   onChange?: (value: string) => void;
   maxHeight?: number;
 }
