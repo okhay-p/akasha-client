@@ -1,52 +1,34 @@
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import api from "@/util/interceptor";
 import { useState } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-
-const FormSchema = z.object({
-  content: z
-    .string()
-    .min(10, {
-      message: "Content must be at least 10 characters.",
-    })
-    .max(5000, {
-      message: "Content must not be longer than 5000 characters.",
-    }),
-});
+import { AutoResizeTextarea } from "@/components/auto-resize-textarea";
+import { Send } from "lucide-react";
 
 function GenerateLessons() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
-
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     setLoading(true);
     toast("We are generating lessons for you. Give us a few seconds");
     try {
-      const res = await api.post("/topic", data);
+      const res = await api.post("/topic", { content: message });
       toast.success("Your lessons are ready!", {
         duration: 5000,
         action: {
           label: "Go to topic",
           onClick: () => navigate("/topic/" + res.data.message),
+        },
+        actionButtonStyle: {
+          backgroundColor: "var(--primary)",
+          color: "var(--foreground)",
         },
       });
     } catch (err) {
@@ -55,7 +37,17 @@ function GenerateLessons() {
         const msg =
           (error.response?.data as { message: string })?.message ||
           "An unknown error occurred";
-        toast.error(msg);
+        toast.error(msg, {
+          style: {
+            color: "var(--destructive)",
+          },
+        });
+      } else {
+        toast.error("Got some errors on our end. We're fixing on it.", {
+          style: {
+            color: "var(--destructive)",
+          },
+        });
       }
     } finally {
       setLoading(false);
@@ -63,44 +55,36 @@ function GenerateLessons() {
   }
 
   return (
-    <div className="h-screen">
-      <div className="p-2 flex mx-auto items-center flex-col max-w-lg m-24">
-        <p className="mb-4 text-center text-foreground font-semibold font-custom text-4xl">
-          Learn any topic with interactvie lessons
-        </p>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-lg md:w-md w-xs"
-          >
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      placeholder="e.g. I want to learn about the history of calendars"
-                      className="mb-2 bg-background"
-                      rows={12}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="mb-2" />
-                </FormItem>
-              )}
-            />
+    <main className="min-h-[calc(100svh-48px)] w-full max-w-2xl space-y-4 mx-auto flex flex-col px-1 font-custom">
+      <div className="flex-1 grid place-items-center text-4xl font-medium text-primary text-center">
+        Learn any topic with interactive lessons
+      </div>
+
+      <div className="mb-4 w-full">
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-2">
+            <div className="flex-1">
+              <AutoResizeTextarea
+                placeholder="Type your content here"
+                value={message}
+                onChange={setMessage}
+                maxHeight={200}
+                className="min-h-[40px] pb-16 text-base"
+              />
+            </div>
             <Button
-              className="w-[100%]"
               type="submit"
-              disabled={loading}
+              size="icon"
+              className="h-10 w-auto px-4 ml-auto -mt-14 mr-2"
+              disabled={!message.trim() || loading}
             >
+              <Send className="h-5 w-5" />
               Generate
             </Button>
-          </form>
-        </Form>
+          </div>
+        </form>
       </div>
-    </div>
+    </main>
   );
 }
 
