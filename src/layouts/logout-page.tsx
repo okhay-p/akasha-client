@@ -20,7 +20,7 @@ export function LogoutPage() {
     const logoutUrl = import.meta.env.VITE_API + "/logout";
     const redirectUrl = "akashalearn.org";
 
-    window.location.href = `${logoutUrl}?redirect_uri=${encodeURIComponent(redirectUrl)}`;
+    window.location.href = `${logoutUrl}?redirect_uri=${redirectUrl}`;
 
     // Fallback in case the redirect doesn't happen
     const timer = setTimeout(() => {
