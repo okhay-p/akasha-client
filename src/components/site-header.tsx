@@ -22,12 +22,15 @@ export function SiteHeader() {
     <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background font-custom">
       <div className="flex h-[--header-height] w-full items-center gap-2 px-4">
         <Button
-          className="h-8 w-8"
+          className="size-8 md:w-auto md:px-2 mr-1"
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
         >
           <SidebarIcon />
+          <div className="hidden md:block font-normal -ml-1">
+            Ctrl + B
+          </div>
         </Button>
         <ModeToggle />
         <Separator orientation="vertical" className="mr-2 h-4" />
