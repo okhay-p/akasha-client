@@ -2,8 +2,8 @@ import React, { useState, useEffect, PropsWithChildren } from "react";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { LoaderCircle } from "lucide-react";
 import api from "@/util/interceptor";
+import logo from "@/assets/logo.svg";
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -98,12 +98,17 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen grid place-items-center bg-gray-500">
+      <div className="min-h-screen grid place-items-center bg-background font-custom">
         <div>
-          <p>Checking Important Information</p>
-          <div className="text-lg animate-spin grid place-items-center">
-            <LoaderCircle />
-          </div>
+          <img
+            className="size-16 animate-bounce mx-auto"
+            src={logo}
+            alt="AkashaLearn"
+          />
+          <p className="text-center">
+            🤚 Hold up 🤚 <br />
+            We're setting things up
+          </p>
         </div>
       </div>
     );
