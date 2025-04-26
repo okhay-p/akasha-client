@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
       setIsAuthenticated(false);
       setAuth("");
     } else {
-      window.open(import.meta.env.VITE_API + "/logout", "_blank");
+      location.href = "/logout";
       // await axios.get(import.meta.env.VITE_API + "/logout");
       localStorage.clear();
       setIsAuthenticated(false);
