@@ -13,6 +13,7 @@ import LessonPage from "@/layouts/lesson-page";
 import AllTopicsPage from "@/layouts/all-topics-page";
 import Dashboard from "./layouts/dashboard";
 import FeedbackPage from "./layouts/feedback-page";
+import { LogoutPage } from "./layouts/logout-page";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
           <Route element={<Dashboard />}>
             <Route
               path="/generate-lessons"
