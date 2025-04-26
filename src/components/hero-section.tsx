@@ -10,7 +10,7 @@ export function HeroSection() {
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+          <h1 className="text-4xl md:text-6xl font-medium leading-tight">
             Learn Anything with AI-Powered Personalized Lessons
           </h1>
           <p className="text-lg text-muted-foreground">

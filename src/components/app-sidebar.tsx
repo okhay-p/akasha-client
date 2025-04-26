@@ -77,7 +77,7 @@ export function AppSidebar({
 
   return (
     <Sidebar
-      className="border-r-0 font-custom top-[48px] h-[calc(100svh-48px)]"
+      className="border-r-0 shadow-sm font-custom top-[48px] h-[calc(100svh-48px)]"
       {...props}
     >
       <SidebarHeader>

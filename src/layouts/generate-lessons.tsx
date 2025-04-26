@@ -13,8 +13,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   content: z
@@ -28,9 +29,9 @@ const FormSchema = z.object({
 });
 
 function GenerateLessons() {
-  const [topicId, setTopicId] = useState("");
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -38,17 +39,26 @@ function GenerateLessons() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
+    toast("We are generating lessons for you. Give us a few seconds");
     try {
       const res = await api.post("/topic", data);
-      setTopicId(res.data.message);
+      toast.success("Your lessons are ready!", {
+        duration: 5000,
+        action: {
+          label: "Go to topic",
+          onClick: () => navigate("/topic/" + res.data.message),
+        },
+      });
     } catch (err) {
       const error = err as AxiosError;
       if (error.status === 400) {
-        setErrMsg(
+        const msg =
           (error.response?.data as { message: string })?.message ||
-            "An unknown error occurred",
-        );
+          "An unknown error occurred";
+        toast.error(msg);
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -89,14 +99,6 @@ function GenerateLessons() {
             </Button>
           </form>
         </Form>
-        {topicId && (
-          <Link to={"/topic/" + topicId}>
-            <Button className="max-w-lg min-w-md mt-2">
-              Go To Topic
-            </Button>
-          </Link>
-        )}
-        {errMsg && <p>{errMsg}</p>}
       </div>
     </div>
   );

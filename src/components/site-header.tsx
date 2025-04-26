@@ -1,5 +1,3 @@
-"use client";
-
 import { LogOut, SidebarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -19,7 +17,7 @@ export function SiteHeader() {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background font-custom">
+    <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background font-custom shadow-sm">
       <div className="flex h-[--header-height] w-full items-center gap-2 px-4">
         <Button
           className="size-8 md:w-auto md:px-2 mr-1"
@@ -39,10 +37,7 @@ export function SiteHeader() {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="flex items-center text-lg my-2 rounded-xl py-1 px-3 hover:bg-muted hover:cursor-pointer">
-                <Avatar
-                  // onClick={() => logout()}
-                  className="border-border border-1 size-7 shadow-sm mr-1"
-                >
+                <Avatar className="border-border border-1 size-7 shadow-sm mr-1">
                   <AvatarImage src={userData?.picture_url} />
                   <AvatarFallback>{userData?.email[0]}</AvatarFallback>
                 </Avatar>

@@ -2,7 +2,7 @@ import api from "@/util/interceptor";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
-
+import logo from "@/assets/logo.svg";
 import {
   Card,
   CardContent,
@@ -45,6 +45,7 @@ function TopicPage() {
   const [topic, setTopic] = useState<TopicFullDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTopic = async () => {
@@ -61,6 +62,7 @@ function TopicPage() {
         console.log("Gotta fetch them");
 
         setTopic(response.data);
+        setLoading(false);
       } catch (err) {
         const error = err as AxiosError;
         if (error.status === 404) {
@@ -85,6 +87,7 @@ function TopicPage() {
         const parsedJson = JSON.parse(ls);
         console.log("Yoinked it from localstorage");
         setTopic(parsedJson);
+        setLoading(false);
       } else {
         fetchTopic();
       }
@@ -93,6 +96,18 @@ function TopicPage() {
       fetchProgress();
     }
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="m-auto">
+        <img
+          className="size-16 animate-bounce -mt-20"
+          src={logo}
+          alt="Loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen">
