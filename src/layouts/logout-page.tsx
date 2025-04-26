@@ -18,7 +18,7 @@ export function LogoutPage() {
 
   useEffect(() => {
     const logoutUrl = import.meta.env.VITE_API + "/logout";
-    const redirectUrl = import.meta.env.BASE_URL + "/";
+    const redirectUrl = "akashalearn.org";
 
     window.location.href = `${logoutUrl}?redirect_uri=${encodeURIComponent(redirectUrl)}`;
 
