@@ -5,7 +5,12 @@ import { useForm } from "react-hook-form";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { AutoResizeTextarea } from "@/components/auto-resize-textarea";
-import { CircleHelp, Sparkles } from "lucide-react";
+import {
+  CircleHelp,
+  CircleMinus,
+  Paperclip,
+  Sparkles,
+} from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -27,6 +32,8 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 
+const fileSizeLimit = 15 * 1024 * 1024; // 15MB
+
 const FormSchema = z.object({
   content: z
     .string()
@@ -45,6 +52,25 @@ const FormSchema = z.object({
     .max(10, {
       message: "The number of lessons must be between 3 and 10.",
     }),
+  attachment: z
+    .instanceof(FileList)
+    .optional()
+    .refine((fileList) => (fileList?.length ?? 0) <= 1, {
+      message: "Only one PDF file can be uploaded.",
+    })
+    .refine(
+      (fileList) => {
+        if (!fileList || fileList.length === 0) return true;
+        return fileList.item(0)?.type === "application/pdf";
+      },
+      { message: "Only the PDF file type is supported. " },
+    )
+    .refine(
+      (fileList) => (fileList?.item(0)?.size ?? 0) <= fileSizeLimit,
+      {
+        message: "File size should not exceed 15MB",
+      },
+    ),
 });
 
 type FormValues = {
@@ -52,6 +78,7 @@ type FormValues = {
   is_public: boolean;
   only_content: boolean;
   num_of_lessons: number;
+  attachment?: FileList;
 };
 
 function GenerateLessons() {
@@ -69,12 +96,30 @@ function GenerateLessons() {
 
   const [loading, setLoading] = useState(false);
 
+  const fileRef = form.register("attachment");
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
     toast("We are generating lessons for you. Give us a few seconds");
 
+    console.log(data);
+
     try {
-      const res = await api.post("/topic", data);
+      const formData = new FormData();
+      formData.append("content", data.content);
+      formData.append("is_public", String(data.is_public)); // Convert boolean to string
+      formData.append("only_content", String(data.only_content)); // Convert boolean to string
+      formData.append("num_of_lessons", String(data.num_of_lessons)); // Convert number to string
+
+      if (data.attachment && data.attachment[0]) {
+        formData.append("attachment", data.attachment[0]);
+      }
+
+      const res = await api.post("/topic", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", //redundant but good to have
+        },
+      });
       toast.success("Your lessons are ready!", {
         duration: 5000,
         action: {
@@ -140,6 +185,55 @@ function GenerateLessons() {
             </div>
             <div className="flex mt-5 justify-between gap-2">
               <div className="flex flex-col gap-2">
+                <FormField
+                  control={form.control}
+                  name="attachment"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                          <label
+                            htmlFor="attachment"
+                            className="cursor-pointer rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-xs hover:shadow-md flex gap-1 items-center"
+                          >
+                            <Paperclip className="size-4" />
+                            <div className="hidden md:block">
+                              Attach PDF
+                            </div>
+                            <Input
+                              id="attachment"
+                              type="file"
+                              {...fileRef}
+                              className="sr-only"
+                            />
+                          </label>
+                          {field.value?.length ? (
+                            <div className="-mt-4 mb-1 md:mt-0 flex items-center">
+                              <span className="text-sm text-muted-foreground">
+                                {field.value.item(0)?.name}
+                                <button
+                                  type="button"
+                                  className="ml-2 size-5 text-destructive"
+                                  onClick={() =>
+                                    field.onChange(undefined)
+                                  }
+                                >
+                                  <CircleMinus className="size-4" />
+                                </button>
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="-mt-4 mb-1 md:mt-0 text-sm text-muted-foreground">
+                              You can attach a PDF file.
+                            </span>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="num_of_lessons"
