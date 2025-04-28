@@ -9,7 +9,10 @@ interface LessonPreviewCardProps {
 
 function LessonPreviewCard({ item, cur }: LessonPreviewCardProps) {
   return (
-    <Link to={item.lesson_order.toString()}>
+    <Link
+      to={item.lesson_order.toString()}
+      className={item.lesson_order > cur ? "pointer-events-none" : ""}
+    >
       <Button
         className="h-[60px] w-[100%] flex items-center p-2 font-custom font-medium justify-between"
         variant="outline"
