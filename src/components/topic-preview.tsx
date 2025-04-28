@@ -19,11 +19,12 @@ interface Props {
 function TopicPreview({ topic }: Props) {
   return (
     <Link to={"/topic/" + topic.id}>
-      <Card className="h-24 flex justify-center ">
+      <Card className="size-40 flex justify-center items-center">
         <CardContent>
-          <p className="font-semibold">
-            {topic.emoji} {topic.title}
-          </p>
+          <div className="mx-auto size-8 shadow-sm rounded-md grid place-items-center border mb-2">
+            {topic.emoji}
+          </div>
+          <p className="text-wrap">{topic.title}</p>
         </CardContent>
       </Card>
     </Link>
