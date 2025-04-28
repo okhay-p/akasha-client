@@ -3,7 +3,7 @@ import { AuthContext, AuthContextValue } from "./AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import api from "@/util/interceptor";
-import logo from "@/assets/logo.svg";
+import Loading from "@/components/loading";
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -97,21 +97,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({
   console.log(userData);
 
   if (loading) {
-    return (
-      <div className="min-h-screen grid place-items-center bg-background font-custom">
-        <div>
-          <img
-            className="size-16 animate-bounce mx-auto"
-            src={logo}
-            alt="AkashaLearn"
-          />
-          <p className="text-center">
-            🤚 Hold up 🤚 <br />
-            We're setting things up
-          </p>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
