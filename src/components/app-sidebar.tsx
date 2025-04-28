@@ -21,6 +21,7 @@ import {
   SidebarMenu,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import api from "@/util/interceptor";
 
@@ -89,6 +90,8 @@ export function AppSidebar({
           deleteProgress={deleteProgress}
         />
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+      </SidebarContent>
+      <SidebarFooter>
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
             <SidebarMenu>
@@ -136,7 +139,7 @@ export function AppSidebar({
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-      </SidebarContent>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
