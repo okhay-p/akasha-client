@@ -25,8 +25,10 @@ export default function Dashboard() {
             <Separator orientation="vertical" className="mr-2 h-4" />
           </div>
 
-          {/* MAIN SECTION */}
-          <Outlet />
+          <div className="mt-[48px]">
+            {/* MAIN SECTION */}
+            <Outlet />
+          </div>
         </SidebarInset>
       </div>
     </SidebarProvider>
