@@ -28,7 +28,7 @@ export const columns: ColumnDef<TopicL1>[] = [
   {
     accessorKey: "created_by",
     header: () => (
-      <User className="hidden md:block" size={16} strokeWidth={3} />
+      <User className="hidden md:block" size={16} strokeWidth={2} />
     ),
     cell: ({ row }) => (
       <div className="hidden md:block">
@@ -46,7 +46,7 @@ export const columns: ColumnDef<TopicL1>[] = [
             column.toggleSorting(column.getIsSorted() === "asc")
           }
         >
-          <Clock size={16} strokeWidth={3} />
+          <Clock size={16} strokeWidth={2} />
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

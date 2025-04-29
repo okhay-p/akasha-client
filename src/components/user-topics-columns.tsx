@@ -35,7 +35,7 @@ export const userTopicColumns: ColumnDef<TopicL1>[] = [
             column.toggleSorting(column.getIsSorted() === "asc")
           }
         >
-          <Clock size={16} strokeWidth={3} />
+          <Clock size={16} strokeWidth={2} />
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
