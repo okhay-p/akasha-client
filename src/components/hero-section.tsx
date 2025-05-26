@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import googleLogo from "@/assets/google-logo.svg";
-import preview1 from "@/assets/preview1.png";
+import preview1 from "@/assets/preview1.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function HeroSection() {
