@@ -20,7 +20,7 @@ export default function Dashboard() {
       <div className="flex flex-1">
         <AppSidebar />
 
-        <SidebarInset>
+        <SidebarInset className="overflow-x-hidden">
           <div className="flex flex-1 items-center gap-2 px-3">
             <Separator orientation="vertical" className="mr-2 h-4" />
           </div>
