@@ -3,8 +3,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Clock, Globe, UserLock } from "lucide-react";
 import { DateTime } from "luxon";
 import { Button } from "./ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { Link } from "react-router-dom";
+import api from "@/util/interceptor";
+import { toast } from "sonner";
 
-export const userTopicColumns: ColumnDef<TopicL1>[] = [
+interface UserTopicColumnsProps {
+  refreshData: () => Promise<void>;
+}
+
+export const getUserTopicColumns = ({ refreshData }: UserTopicColumnsProps): ColumnDef<TopicL1>[] => [
   {
     accessorKey: "emoji",
     header: "",
@@ -22,7 +30,13 @@ export const userTopicColumns: ColumnDef<TopicL1>[] = [
     cell: ({ row }) => {
       const title = row.getValue("title") as string;
       if (!title) return null;
-      return <div className="w-32 md:w-auto text-wrap">{title}</div>;
+      return (
+        <Link
+          to={`/topic/${(row.original as TopicL1).id}`}
+          className="contents"
+        >
+          <div className="w-32 md:w-auto text-wrap hover:underline">{title}</div>
+        </Link>)
     },
   },
   {
@@ -56,9 +70,47 @@ export const userTopicColumns: ColumnDef<TopicL1>[] = [
     cell: ({ row }) => (
       <div className="text-right">
         {row.getValue("is_public") ? (
-          <Globe className="mx-auto size-4 text-primary" />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" className="z-10 mx-auto w-full">
+              <Globe className="mx-auto size-4 text-primary-foreground" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={async ()=>{
+                try {
+                  await api.put(`/topic/${row.original.id}/private`)
+                } catch (error) {
+                  toast.error("Error updating the topic visibility")
+                  console.log(error)
+                }
+                await refreshData();
+              }}>
+                Mark as private
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
-          <UserLock className="mx-auto size-4" />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="z-10 mx-auto w-full">
+                <UserLock className="mx-auto size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={async ()=>{
+                try {
+                  await api.put(`/topic/${row.original.id}/public`)
+                } catch (error) {
+                  toast.error("Error updating the topic visibility")
+                  console.log(error)
+                }
+                await refreshData();
+              }}>
+                Mark as public
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
     ),

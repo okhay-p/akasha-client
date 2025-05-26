@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Clock, User } from "lucide-react";
 import { DateTime } from "luxon";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 export const columns: ColumnDef<TopicL1>[] = [
   {
@@ -22,7 +23,13 @@ export const columns: ColumnDef<TopicL1>[] = [
     cell: ({ row }) => {
       const title = row.getValue("title") as string;
       if (!title) return null;
-      return <div className="w-32 md:w-auto text-wrap">{title}</div>;
+      return (
+        <Link
+          to={`/topic/${(row.original as TopicL1).id}`}
+          className="contents"
+        >
+          <div className="w-32 md:w-auto text-wrap hover:underline">{title}</div>
+        </Link>)
     },
   },
   {
